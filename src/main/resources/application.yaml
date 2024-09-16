@@ -1,3 +1,6 @@
+server:
+  address: 13.124.90.163
+  port: 8080
 spring:
   config:
     import: optional:file:.env[.properties]
