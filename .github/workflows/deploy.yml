@@ -72,4 +72,4 @@ jobs:
             cd github-trendu
             sudo docker stop github-trendu-dev
             sudo docker rm github-trendu-dev
-            sudo docker run -it -d -p 8080:8080 --name github-trendu-dev gbtwld/github-trendu-dev
+            sudo docker run -d -p 8080:8080 --name github-trendu-dev gbtwld/github-trendu-dev
