@@ -73,16 +73,16 @@ jobs:
         if: contains(github.ref, 'main')
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -f Dockerfile-dev -t ${{ secrets.DOCKER_USERNAME }}/docker-test-prod .
-          docker push ${{ secrets.DOCKER_USERNAME }}/docker-test-prod
+          docker build -f Dockerfile-dev -t ${{ secrets.DOCKER_USERNAME }}/github-trendu-prod .
+          docker push ${{ secrets.DOCKER_USERNAME }}/github-trendu-prod
 
       # docker build & push to develop
       - name: Docker build & push to dev
         if: contains(github.ref, 'develop')
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -f Dockerfile-dev -t ${{ secrets.DOCKER_USERNAME }}/docker-test-dev .
-          docker push ${{ secrets.DOCKER_USERNAME }}/docker-test-dev
+          docker build -f Dockerfile-dev -t ${{ secrets.DOCKER_USERNAME }}/github-trendu-dev .
+          docker push ${{ secrets.DOCKER_USERNAME }}/github-trendu-dev
 
       ## deploy to production
       - name: Deploy to prod
@@ -96,8 +96,8 @@ jobs:
           envs: GITHUB_SHA
           script: |
             sudo docker ps
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/docker-test-prod
-            sudo docker run -d -p 8082:8082 ${{ secrets.DOCKER_USERNAME }}/docker-test-prod
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/github-trendu-prod
+            sudo docker run -d -p 8082:8082 ${{ secrets.DOCKER_USERNAME }}/github-trendu-prod
             sudo docker image prune -f
 
       ## deploy to develop
@@ -113,6 +113,6 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
             sudo docker ps
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/docker-test-dev
-            sudo docker run -d -p 8081:8081 ${{ secrets.DOCKER_USERNAME }}/docker-test-dev
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/github-trendu-dev
+            sudo docker run -d -p 8081:8081 ${{ secrets.DOCKER_USERNAME }}/github-trendu-dev
             sudo docker image prune -f
