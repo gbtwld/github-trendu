@@ -27,6 +27,17 @@ jobs:
         with:
           java-version: 22
 
+      # 빌드 캐싱
+      - name: Gradle Caching
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
       # Gradle Build
       - name: Build with Gradle
         run: ./gradlew build
@@ -41,7 +52,7 @@ jobs:
       # DockerHub Push
       - name: Build and Push Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/github-trendu-dev .
+          docker build -f Dockerfile-dev -t ${{ secrets.DOCKER_HUB_USERNAME }}/github-trendu-dev .
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/github-trendu-dev
   
 
