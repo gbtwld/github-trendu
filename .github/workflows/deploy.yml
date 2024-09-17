@@ -87,7 +87,7 @@ jobs:
             cd github-trendu
             sudo docker stop github-trendu-dev
             sudo docker rm github-trendu-dev
-            sudo docker run -e DB_URL=${{ secrets.DB_URL }} -e DB_USERNAME=${{ secrets.DB_USERNAME }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} -d -p 8080:8080 --name github-trendu-dev gbtwld/github-trendu-dev
+            sudo docker run --env-file .env -d -p 8080:8080 --name github-trendu-dev gbtwld/github-trendu-dev
       - name: Remove Github Actions IP From Security Group
         run: |
           aws ec2 revoke-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
