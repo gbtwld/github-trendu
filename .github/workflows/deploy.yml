@@ -36,7 +36,6 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_NAME }}
-          role-session-name: github-trendu-github-actions
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
       # 빌드 캐싱
