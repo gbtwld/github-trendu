@@ -33,7 +33,7 @@ jobs:
 
       # AWS 인증
       - name: configure aws credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_NAME }}
           role-session-name: github-trendu-github-actions
