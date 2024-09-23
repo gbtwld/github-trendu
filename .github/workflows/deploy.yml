@@ -68,11 +68,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
 
-    env:
-      DB_URL: ${{ secrets.DB_URL }}
-      DB_USERNAME: ${{ secrets.DB_USERNAME }}
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-
     steps:
       - name: Get Github Actions IP
         id: ip
@@ -100,7 +95,7 @@ jobs:
             cd github-trendu
             sudo docker stop github-trendu-dev
             sudo docker rm github-trendu-dev
-            sudo docker run -d -p 8080:8080 --name github-trendu-dev gbtwld/github-trendu-dev
+            sudo docker run -e DB_URL=${{ secrets.DB_URL }} -e DB_USERNAME=${{ secrets.DB_USERNAME }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} -d -p 8080:8080 --name github-trendu-dev gbtwld/github-trendu-dev
 
       - name: Remove Github Actions IP From Security Group
         run: |
